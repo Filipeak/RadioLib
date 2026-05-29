@@ -25,20 +25,32 @@ Module::Module(const Module& mod) {
 }
 
 Module& Module::operator=(const Module& mod) {
-  memcpy(reinterpret_cast<void*>(&(const_cast<Module&>(mod)).spiConfig), &this->spiConfig, sizeof(SPIConfig_t));
+  this->hal = mod.hal;
+  memcpy(&this->spiConfig, reinterpret_cast<void*>(&(const_cast<Module&>(mod)).spiConfig), sizeof(SPIConfig_t));
   this->csPin = mod.csPin;
   this->irqPin = mod.irqPin;
   this->rstPin = mod.rstPin;
   this->gpioPin = mod.gpioPin;
+
+  memcpy(this->rfSwitchPins, mod.rfSwitchPins, Module::RFSWITCH_MAX_PINS*sizeof(this->rfSwitchPins[0]));
+  this->rfSwitchTable = mod.rfSwitchTable;
+
+  #if RADIOLIB_INTERRUPT_TIMING
+    this->TimerSetupCb = mod.TimerSetupCb;
+    this->TimerFlag = mod.TimerFlag;
+    this->prevTimingLen = mod.prevTimingLen;
+  #endif
+  
   return(*this);
 }
 
-static volatile const char info[] = RADIOLIB_INFO;
+static volatile const char rlb_info[] = RADIOLIB_INFO;
 void Module::init() {
   this->hal->init();
   this->hal->pinMode(csPin, this->hal->GpioModeOutput);
   this->hal->digitalWrite(csPin, this->hal->GpioLevelHigh);
   RADIOLIB_DEBUG_BASIC_PRINTLN(RADIOLIB_INFO);
+  RADIOLIB_VALUE_USED(rlb_info);
 }
 
 void Module::term() {

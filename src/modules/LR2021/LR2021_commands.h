@@ -52,6 +52,7 @@
 #define RADIOLIB_LR2021_CMD_CONFIG_LF_CLOCK                     (0x0118)
 #define RADIOLIB_LR2021_CMD_CONFIG_CLK_OUTPUTS                  (0x0119)
 #define RADIOLIB_LR2021_CMD_SET_TCXO_MODE                       (0x0120)
+#define RADIOLIB_LR2021_CMD_ACTIVATE_PRAM                       (0x012D)
 #define RADIOLIB_LR2021_CMD_SET_XOSC_CP_TRIM                    (0x0131)
 #define RADIOLIB_LR2021_CMD_SET_RF_FREQUENCY                    (0x0200)
 #define RADIOLIB_LR2021_CMD_SET_RX_PATH                         (0x0201)
@@ -344,6 +345,7 @@
 #define RADIOLIB_LR2021_PA_HIGH_POWER                           (0x01UL << 0)   //  1     0                high-power
 
 // RADIOLIB_LR2021_CMD_SET_PA_CONFIG
+#define RADIOLIB_LR2021_PA_TABLE_LEN                            (32)
 #define RADIOLIB_LR2021_PA_LF_MODE_FSM                          (0x00UL << 0)   //  1     0     PA LF mode: full single-ended mode
 #define RADIOLIB_LR2021_PA_LF_DUTY_CYCLE_UNUSED                 (0x06UL << 0)   //  7     4     PA LF duty cycle: PA not used
 #define RADIOLIB_LR2021_PA_LF_SLICES_UNUSED                     (0x07UL << 0)   //  3     0     PA LF slices: PA not used
